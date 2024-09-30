@@ -48,62 +48,11 @@ struct FlightLiveActivityView: View {
                                     .foregroundColor(.white)
                     }
                     .padding(8)
-                    VStack(alignment: .leading) {
-                                    HStack {
-                                        Text("Gate closes in \(context.state.gateCloseTime) min")
-                                        Spacer()
-                                        Text("Group \(context.state.boardingGroup) \u{2022} Seat \(context.state.seat)")
-                                    }
-
-                        }
-                        .padding(16)
-                        .background(Color.green.opacity(0.8))
-
+            AirplaneProgressView(progress: calculateProgress())
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
                 }
-//        .padding(8)
         .background(Color.white.opacity(0.8))
-//        VStack {
-//            HStack {
-//                Text(context.state.departureCode)
-//                    .font(.headline)
-//                    .padding(.trailing, 8)
-//
-//                DottedLine()
-//                    .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
-//                    .frame(height: 1)
-//                    .foregroundColor(.gray)
-//                    .padding(.horizontal, 8)
-//
-//                Image(systemName: "airplane")
-//                    .font(.title)
-//                    .padding(.horizontal, 8)
-//
-//                DottedLine()
-//                    .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
-//                    .frame(height: 1)
-//                    .foregroundColor(.gray)
-//                    .padding(.horizontal, 8)
-//
-//                Text(context.state.arrivalCode)
-//                    .font(.headline)
-//                    .padding(.leading, 8)
-//            }
-//            .padding(.bottom, 16)
-//
-//            HStack {
-//                Image(systemName: "clock")
-//                    .font(.title)
-//                    .padding(.trailing, 4)
-//                VStack(alignment: .leading) {
-//                    Text("Departure: \(context.state.departureTime, formatter: dateFormatter)")
-//                    Text("Arrival: \(context.state.arrivalTime, formatter: dateFormatter)")
-//                }
-//            }
-//
-//            Text("Status: \(context.state.status)")
-//                .padding(.top, 8)
-//        }
-//        .padding()
     }
 
     private var dateFormatter: DateFormatter {
@@ -112,6 +61,23 @@ struct FlightLiveActivityView: View {
         formatter.dateStyle = .short
         return formatter
     }
+
+    private func calculateProgress() -> CGFloat {
+//            let currentTime = Date()
+//            let departureTime = context.state.departureTime // Assuming this is of type Date
+//            let arrivalTime = context.state.arrivalTime     // Assuming this is of type Date
+//
+//            guard currentTime >= departureTime && currentTime <= arrivalTime else {
+//                return currentTime < departureTime ? 0.0 : 1.0
+//            }
+//
+//            let totalDuration = arrivalTime.timeIntervalSince(departureTime)
+//            let elapsedDuration = currentTime.timeIntervalSince(departureTime)
+
+            return CGFloat(0.50)
+            //return CGFloat(elapsedDuration / totalDuration)
+        }
+
 }
 
 struct DottedLine: Shape {
@@ -122,6 +88,8 @@ struct DottedLine: Shape {
         return path
     }
 }
+
+
 
 //struct FlightLiveActivityView: View {
 //    let context: ActivityViewContext<FlightAttributes>

@@ -38,16 +38,17 @@ struct ContentView: View {
     func startFlightActivity() {
         let attributes = FlightAttributes(airline: "Alaska Airlines")
         let initialContentState = FlightAttributes.ContentState(
-            flightNumber: "AS2381",
-                                                   boardingGroup: "C",
-                                                   departureGate: "N7",
-                                                   terminal: "N",
-                                                   status: "ON TIME",
-                                                   gateCloseTime: 15,
-                                                   seat: "22D"
+            flightNumber: "AS1019",
+            boardingGroup: "I",
+            departureGate: "N88",
+            terminal: "N",
+            status: "ON TIME",
+            gateCloseTime: 19,
+            seat: "21I"
         )
 
         do {
+            print("lyndon")
             let activity = try Activity<FlightAttributes>.request(
                 attributes: attributes,
                 contentState: initialContentState,
@@ -62,20 +63,16 @@ struct ContentView: View {
     }
 
     func updateFlightActivity(activityId: String) {
-        let newStatus = "Delayed"
-        let newDepartureTime = Date().addingTimeInterval(2 * 60 * 60)
-        let newArrivalTime = Date().addingTimeInterval(7 * 60 * 60)
-
         Task {
             if let activity = Activity<FlightAttributes>.activities.first(where: { $0.id == activityId }) {
                 await activity.update(using: FlightAttributes.ContentState(
                     flightNumber: "AS2381",
-                                                           boardingGroup: "C",
-                                                           departureGate: "N7",
-                                                           terminal: "N",
-                                                           status: "ON TIME",
-                                                           gateCloseTime: 15,
-                                                           seat: "22D"
+                    boardingGroup: "C",
+                    departureGate: "N7",
+                    terminal: "N",
+                    status: "Delayed",  // Simulating an update
+                    gateCloseTime: 15,
+                    seat: "22D"
                 ))
             }
         }
@@ -84,19 +81,12 @@ struct ContentView: View {
     func endFlightActivity(activityId: String) {
         Task {
             if let activity = Activity<FlightAttributes>.activities.first(where: { $0.id == activityId }) {
-                await activity.update(using: FlightAttributes.ContentState(
-                    flightNumber: "AS2381",
-                                                           boardingGroup: "C",
-                                                           departureGate: "N7",
-                                                           terminal: "N",
-                                                           status: "ON TIME",
-                                                           gateCloseTime: 15,
-                                                           seat: "22D"
-                ))
+                await activity.end(dismissalPolicy: .immediate)
                 self.isFlightStarted = false
             }
         }
     }
 }
+
 
 
